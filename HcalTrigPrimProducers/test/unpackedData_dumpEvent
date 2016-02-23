@@ -1,0 +1,17 @@
+[?1034hType                                  Module                   Label     Process   
+-----------------------------------------------------------------------------------
+L1GlobalTriggerObjectMapRecord        "hltL1GtObjectMap"       ""        "HLT"     
+edm::TriggerResults                   "TriggerResults"         ""        "HLT"     
+trigger::TriggerEvent                 "hltTriggerSummaryAOD"   ""        "HLT"     
+FEDRawDataCollection                  "rawDataCollector"       ""        "LHC"     
+HcalDataFrameContainer<QIE10DataFrame>    "hcalDigis"              ""        "L1"      
+HcalUnpackerReport                    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HBHEDataFrame,edm::StrictWeakOrdering<HBHEDataFrame> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HFDataFrame,edm::StrictWeakOrdering<HFDataFrame> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HODataFrame,edm::StrictWeakOrdering<HODataFrame> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HOTriggerPrimitiveDigi,edm::StrictWeakOrdering<HOTriggerPrimitiveDigi> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HcalCalibDataFrame,edm::StrictWeakOrdering<HcalCalibDataFrame> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HcalTTPDigi,edm::StrictWeakOrdering<HcalTTPDigi> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<HcalTriggerPrimitiveDigi,edm::StrictWeakOrdering<HcalTriggerPrimitiveDigi> >    "hcalDigis"              ""        "L1"      
+edm::SortedCollection<ZDCDataFrame,edm::StrictWeakOrdering<ZDCDataFrame> >    "hcalDigis"              ""        "L1"      
+edm::TriggerResults                   "TriggerResults"         ""        "L1"      
