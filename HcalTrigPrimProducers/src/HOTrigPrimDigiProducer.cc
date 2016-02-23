@@ -48,9 +48,6 @@ HOTrigPrimDigiProducer::HOTrigPrimDigiProducer(const edm::ParameterSet& ps)
 
 
 void HOTrigPrimDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& eventSetup) {
-  int e = iEvent.id().event();
-
-  if(e == 294807358 || e == 290411280){
 
  // Step A: get the conditions, for the decoding
   edm::ESHandle<HcalTPGCoder> inputCoder;
@@ -72,9 +69,6 @@ void HOTrigPrimDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
   edm::Handle<HODigiCollection>   hoDigis;
   iEvent.getByToken(tok_ho_,hoDigis);
 
-  // protect here against missing input collections
-  // there is no protection in HcalTriggerPrimitiveAlgo
-  
   if (!hoDigis.isValid()) {
     edm::LogInfo("HOTrigPrimDigiProducer")
       << "\nWarning: HODigiCollection with input tag "
@@ -95,7 +89,6 @@ void HOTrigPrimDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
 	       &(*pG));
   
   iEvent.put(result);
-  }
 }
 
 
