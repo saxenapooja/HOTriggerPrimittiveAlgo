@@ -187,9 +187,6 @@ void HcalTriggerPrimitiveAlgo::addSignal(const HBHEDataFrame & frame) {
 
 
 void HcalTriggerPrimitiveAlgo::addSignal(const HODataFrame & frame) {
-  bool doDebug = true;
- if(doDebug)  std::cout<<"New frame with digi: "<< frame.id()<<std::endl;
-  
   if (frame.id().depth()==4) {
     std::vector<HcalTrigTowerDetId> ids = theTrigTowerGeometry->towerIds(frame.id());
     assert(ids.size() == 1);
@@ -221,15 +218,6 @@ void HcalTriggerPrimitiveAlgo::addSignal(const HODataFrame & frame) {
       for (int i=0; i<samples.size(); ++i) sumMuSamples[i] += samples[i];
       sumMu.push_back(sumMuSamples);
     }
-    
-    unsigned short energy = 0;
-    for (int i=0; i < samples.size(); ++i) {
-      unsigned short fC =  incoder_->adc2Linear(frame.sample(i), frame.id());
-      energy += fC;
- if(doDebug)      std::cout<<"HO QIE sample[ "<<i<<"] -> " << frame.sample(i) <<" and linearADC : "<< fC<< std::endl;
-    }
-    //    EMap.insert(std::make_pair(ids[0], energy));    
-    
   }
 }
 
@@ -397,9 +385,6 @@ void HcalTriggerPrimitiveAlgo::analyze(IntegerCaloSamples & samples, HcalTrigger
 
 
 void HcalTriggerPrimitiveAlgo::analyzeHO(IntegerCaloSamples & samples, HOTriggerPrimitiveDigi & result) {
-  bool doDebug = true;
-  if(doDebug)  std::cout<<"************** AnalyzeHO, with sample size as: " << (samples.size()) <<std::endl;                                                                                                             
-
   HcalTrigTowerDetId detId(samples.id());
   IntegerCaloSamples sum(samples.id(), samples.size());
   
@@ -429,7 +414,6 @@ void HcalTriggerPrimitiveAlgo::analyzeHO(IntegerCaloSamples & samples, HOTrigger
   int databit = 0;
   bool isMip    = false;
   
- if(doDebug)  std::cout<<"sumMu size :"<< sumMu.size() << std::endl;
   for (SumMuContainer::const_iterator sumMuItr = sumMu.begin(); sumMuItr != sumMu.end(); ++sumMuItr) 
     {
       unsigned int maxPair = 0;
@@ -438,7 +422,6 @@ void HcalTriggerPrimitiveAlgo::analyzeHO(IntegerCaloSamples & samples, HOTrigger
       for (int ibin = 0; ibin <= tpSamples; ++ibin) 
 	{
 	  int idx = ibin + shift;
-	  if(doDebug)	  std::cout<<"x-2 : "<<(*sumMuItr)[idx-2] <<", x-1 : "<<(*sumMuItr)[idx-1] <<", x :"<<(*sumMuItr)[idx] << std::endl;
 	  unsigned int minBound  = (*sumMuItr)[idx-2] + (*sumMuItr)[idx-1] ;
 	  unsigned int maxBound  = (*sumMuItr)[idx-1] + (*sumMuItr)[idx] ;
 	  
@@ -448,17 +431,11 @@ void HcalTriggerPrimitiveAlgo::analyzeHO(IntegerCaloSamples & samples, HOTrigger
 
 	  if(ibin == 1) isPeak = (minBound >= maxBound) && ( minBound >= finalPair) && (*sumMuItr)[ibin+1] >  (*sumMuItr)[ibin-1];
 	  else  isPeak = (minBound >= maxBound) && ( minBound >= finalPair);
-	  if(doDebug)	  std::cout<<"min : "<<minBound <<", maxBound : "<<maxBound<<", maxPair : "<< finalPair<< std::endl;
 	  
 	  isMip = isPeak && ( (minBound >= muonBitThreshold_low_ && minBound < muonBitThreshold_high_)) && (ibin >= 1);
 	  databit = isMip << (ibin-1);
-	  if(doDebug)	  std::cout<<"isPeak : "<< isPeak<<", ibin:" <<ibin<<", mip :"<< isMip<< std::endl; 
-	  if(doDebug) std::cout<<"----------------------------"<<std::endl;
-	  if(isMip) break;
 	}
     }
-  
- if(doDebug)  std::cout<<"result has: "<<detId.ieta()<<","<<detId.iphi()<<","<<tpSamples<<","<<tpPresamples<<","<<databit<<std::endl;
   result = HOTriggerPrimitiveDigi(detId.ieta(), detId.iphi(), tpSamples, tpPresamples, databit);
 }
 
